@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>OpenLinux — Linux Distributions</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            color: #fff;
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(circle at 15% 15%, #17134a 0%, transparent 30%),
+                radial-gradient(circle at 85% 70%, #30104b 0%, transparent 30%),
+                radial-gradient(circle at 50% 100%, #071c38 0%, transparent 35%),
+                #020204;
+            overflow-x: hidden;
+        }
+
+        /* =========================
+           SPACE
+        ========================= */
+
+        .space {
+            position: fixed;
+            inset: 0;
+            z-index: -5;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            opacity: .6;
+            animation: twinkle 3s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            from {
+                opacity: .15;
+                transform: scale(.6);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1.5);
+            }
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+
+            width: 100%;
+            padding: 20px 7%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            background: rgba(2, 2, 4, .72);
+            backdrop-filter: blur(18px);
+
+            border-bottom: 1px solid rgba(255,255,255,.08);
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: #8b5cf6;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-link {
+            color: #aaa;
+            text-decoration: none;
+            transition: .3s;
+        }
+
+        .nav-link:hover {
+            color: #fff;
+        }
+
+        /* Language */
+
+        .language-switch {
+            display: flex;
+            gap: 4px;
+
+            padding: 4px;
+
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,.1);
+
+            background: rgba(255,255,255,.04);
+        }
+
+        .language-switch button {
+            border: 0;
+            background: transparent;
+
+            color: #777;
+
+            padding: 7px 10px;
+            border-radius: 7px;
+
+            cursor: pointer;
+            font-weight: bold;
+
+            transition: .25s;
+        }
+
+        .language-switch button.active {
+            color: white;
+            background: #7c3aed;
+            box-shadow: 0 0 15px rgba(124,58,237,.3);
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            min-height: 78vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            text-align: center;
+
+            padding: 100px 20px;
+        }
+
+        .hero-content {
+            max-width: 900px;
+        }
+
+        .badge {
+            display: inline-block;
+
+            padding: 9px 17px;
+
+            border: 1px solid rgba(139,92,246,.4);
+            border-radius: 50px;
+
+            color: #bba3ff;
+            background: rgba(139,92,246,.08);
+
+            font-size: 12px;
+            letter-spacing: 2px;
+
+            margin-bottom: 28px;
+        }
+
+        h1 {
+            font-size: clamp(65px, 11vw, 135px);
+
+            line-height: .85;
+
+            letter-spacing: -7px;
+
+            margin-bottom: 35px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ffffff,
+                    #a78bfa,
+                    #ffffff
+                );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            max-width: 700px;
+
+            margin: auto;
+
+            color: #999;
+
+            font-size: 20px;
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            margin-top: 40px;
+
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+
+            flex-wrap: wrap;
+        }
+
+        .hero-button {
+            display: inline-block;
+
+            padding: 15px 25px;
+
+            border-radius: 12px;
+
+            color: white;
+            text-decoration: none;
+
+            font-weight: bold;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7c3aed,
+                    #4f46e5
+                );
+
+            box-shadow:
+                0 0 35px rgba(124,58,237,.3);
+
+            transition: .3s;
+        }
+
+        .hero-button:hover {
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 0 55px rgba(124,58,237,.55);
+        }
+
+        .hero-button.secondary {
+            background: rgba(255,255,255,.04);
+            border: 1px solid rgba(255,255,255,.12);
+
+            box-shadow: none;
+        }
+
+        .hero-button.secondary:hover {
+            background: rgba(255,255,255,.08);
+        }
+
+        /* =========================
+           ABOUT
+        ========================= */
+
+        .about {
+            max-width: 1050px;
+            margin: 0 auto;
+
+            padding: 40px 30px 90px;
+        }
+
+        .about-box {
+            position: relative;
+
+            padding: 45px;
+
+            border-radius: 24px;
+
+            border: 1px solid rgba(255,255,255,.09);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,255,255,.05),
+                    rgba(255,255,255,.015)
+                );
+
+            backdrop-filter: blur(15px);
+
+            overflow: hidden;
+        }
+
+        .about-box::before {
+            content: "";
+
+            position: absolute;
+
+            width: 250px;
+            height: 250px;
+
+            right: -100px;
+            top: -100px;
+
+            background: #7c3aed;
+
+            filter: blur(100px);
+
+            opacity: .16;
+        }
+
+        .about-title {
+            font-size: 35px;
+            margin-bottom: 18px;
+        }
+
+        .about-text {
+            color: #999;
+            line-height: 1.8;
+            font-size: 17px;
+            max-width: 850px;
+        }
+
+        .about-grid {
+            margin-top: 30px;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 15px;
+        }
+
+        .about-item {
+            padding: 22px;
+
+            border-radius: 15px;
+
+            background: rgba(255,255,255,.035);
+
+            border: 1px solid rgba(255,255,255,.06);
+        }
+
+        .about-item strong {
+            display: block;
+
+            font-size: 18px;
+
+            margin-bottom: 7px;
+        }
+
+        .about-item span {
+            color: #777;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* =========================
+           DISTROS
+        ========================= */
+
+        .section {
+            padding: 90px 7%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .section-title h2 {
+            font-size: 45px;
+            margin-bottom: 12px;
+        }
+
+        .section-title p {
+            color: #777;
+        }
+
+        /* Search */
+
+        .search-container {
+            max-width: 650px;
+            margin: 0 auto 45px;
+        }
+
+        .search {
+            width: 100%;
+
+            padding: 17px 20px;
+
+            border-radius: 13px;
+
+            outline: none;
+
+            border: 1px solid rgba(255,255,255,.1);
+
+            background: rgba(255,255,255,.04);
+
+            color: white;
+
+            font-size: 15px;
+
+            transition: .3s;
+        }
+
+        .search:focus {
+            border-color: #7c3aed;
+
+            box-shadow:
+                0 0 25px rgba(124,58,237,.12);
+        }
+
+        .search::placeholder {
+            color: #666;
+        }
+
+        .distros {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(250px, 1fr));
+
+            gap: 22px;
+
+            max-width: 1250px;
+
+            margin: auto;
+        }
+
+        .card {
+            position: relative;
+
+            min-height: 330px;
+
+            padding: 30px;
+
+            border-radius: 20px;
+
+            border: 1px solid rgba(255,255,255,.08);
+
+            background: rgba(255,255,255,.035);
+
+            backdrop-filter: blur(15px);
+
+            transition:
+                transform .35s,
+                border-color .35s,
+                background .35s;
+
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: "";
+
+            position: absolute;
+
+            width: 170px;
+            height: 170px;
+
+            top: -80px;
+            right: -80px;
+
+            background: #7c3aed;
+
+            filter: blur(90px);
+
+            opacity: .12;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+
+            border-color:
+                rgba(139,92,246,.5);
+
+            background:
+                rgba(255,255,255,.06);
+        }
+
+        .icon {
+            width: 58px;
+            height: 58px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 15px;
+
+            background: rgba(255,255,255,.06);
+
+            font-size: 30px;
+
+            margin-bottom: 22px;
+        }
+
+        .card h3 {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            color: #888;
+
+            line-height: 1.6;
+
+            min-height: 78px;
+        }
+
+        .download {
+            display: inline-block;
+
+            margin-top: 25px;
+
+            padding: 11px 18px;
+
+            border-radius: 10px;
+
+            color: white;
+
+            text-decoration: none;
+
+            background: #15131d;
+
+            border: 1px solid rgba(255,255,255,.1);
+
+            transition: .3s;
+        }
+
+        .download:hover {
+            background: #7c3aed;
+
+            border-color: #7c3aed;
+
+            box-shadow:
+                0 0 25px rgba(124,58,237,.25);
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            padding: 45px 20px;
+
+            text-align: center;
+
+            border-top:
+                1px solid rgba(255,255,255,.08);
+
+            background:
+                rgba(0,0,0,.35);
+        }
+
+        .footer-logo {
+            font-size: 22px;
+            font-weight: 900;
+
+            margin-bottom: 10px;
+        }
+
+        .footer-logo span {
+            color: #8b5cf6;
+        }
+
+        footer p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        footer a {
+            color: #a78bfa;
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+            transition: .3s;
+        }
+
+        footer a:hover {
+            color: white;
+        }
+
+        .copyright {
+            margin-top: 25px;
+
+            font-size: 13px;
+
+            color: #444;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 700px) {
+
+            nav {
+                padding: 17px 20px;
+            }
+
+            .nav-right {
+                gap: 12px;
+            }
+
+            .nav-link {
+                display: none;
+            }
+
+            h1 {
+                letter-spacing: -4px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .section {
+                padding: 60px 20px;
+            }
+
+            .section-title h2 {
+                font-size: 35px;
+            }
+
+            .about {
+                padding: 20px;
+            }
+
+            .about-box {
+                padding: 28px;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         SPACE BACKGROUND
+    ========================== -->
+
+    <div class="space" id="space"></div>
+
+
+    <!-- =========================
+         NAVIGATION
+    ========================== -->
+
+    <nav>
+
+        <div class="logo">
+            Open<span>Linux</span>
+        </div>
+
+        <div class="nav-right">
+
+            <a
+                href="#about"
+                class="nav-link"
+                data-ru="О проекте"
+                data-en="About"
+            >
+                О проекте
+            </a>
+
+            <a
+                href="#distros"
+                class="nav-link"
+                data-ru="Дистрибутивы"
+                data-en="Distributions"
+            >
+                Дистрибутивы
+            </a>
+
+            <div class="language-switch">
+
+                <button
+                    id="ru"
+                    class="active"
+                    onclick="setLanguage('ru')"
+                >
+                    RU
+                </button>
+
+                <button
+                    id="en"
+                    onclick="setLanguage('en')"
+                >
+                    EN
+                </button>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div
+                class="badge"
+                data-ru="OPEN SOURCE • LINUX • SPACE"
+                data-en="OPEN SOURCE • LINUX • SPACE"
+            >
+                OPEN SOURCE • LINUX • SPACE
+            </div>
+
+            <h1>OpenLinux</h1>
+
+            <p
+                data-ru="Единая точка для быстрого поиска и скачивания Linux-дистрибутивов. Меньше поиска — больше Linux."
+                data-en="A single place to quickly find and download Linux distributions. Less searching — more Linux."
+            >
+                Единая точка для быстрого поиска и скачивания
+                Linux-дистрибутивов.
+                Меньше поиска — больше Linux.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a
+                    href="#distros"
+                    class="hero-button"
+                    data-ru="Выбрать дистрибутив ↓"
+                    data-en="Choose distribution ↓"
+                >
+                    Выбрать дистрибутив ↓
+                </a>
+
+                <a
+                    href="#about"
+                    class="hero-button secondary"
+                    data-ru="О проекте"
+                    data-en="About project"
+                >
+                    О проекте
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         ABOUT PROJECT
+    ========================== -->
+
+    <section class="about" id="about">
+
+        <div class="about-box">
+
+            <h2
+                class="about-title"
+                data-ru="Что такое OpenLinux?"
+                data-en="What is OpenLinux?"
+            >
+                Что такое OpenLinux?
+            </h2>
+
+            <p
+                class="about-text"
+                data-ru="OpenLinux — проект, созданный для оптимизации процесса поиска и скачивания Linux-дистрибутивов. Вместо десятков поисковых запросов и переходов по разным сайтам пользователь получает удобный каталог популярных систем в одном месте. OpenLinux не распространяет изменённые ISO — кнопки загрузки ведут на официальные ресурсы разработчиков."
+                data-en="OpenLinux is a project created to optimize the process of finding and downloading Linux distributions. Instead of dozens of searches and different websites, users get a convenient catalog of popular systems in one place. OpenLinux does not redistribute modified ISOs — download buttons lead to the official resources of each project."
+            >
+                OpenLinux — проект, созданный для оптимизации процесса
+                поиска и скачивания Linux-дистрибутивов.
+                Вместо десятков поисковых запросов и переходов по разным
+                сайтам пользователь получает удобный каталог популярных
+                систем в одном месте.
+                OpenLinux не распространяет изменённые ISO —
+                кнопки загрузки ведут на официальные ресурсы разработчиков.
+            </p>
+
+
+            <div class="about-grid">
+
+                <div class="about-item">
+
+                    <strong
+                        data-ru="⚡ Быстрее"
+                        data-en="⚡ Faster"
+                    >
+                        ⚡ Быстрее
+                    </strong>
+
+                    <span
+                        data-ru="Не нужно искать официальный сайт каждого дистрибутива."
+                        data-en="No need to search for the official website of every distribution."
+                    >
+                        Не нужно искать официальный сайт каждого
+                        дистрибутива.
+                    </span>
+
+                </div>
+
+
+                <div class="about-item">
+
+                    <strong
+                        data-ru="🌌 В одном месте"
+                        data-en="🌌 One place"
+                    >
+                        🌌 В одном месте
+                    </strong>
+
+                    <span
+                        data-ru="Популярные Linux-системы собраны в едином каталоге."
+                        data-en="Popular Linux systems are collected in one catalog."
+                    >
+                        Популярные Linux-системы собраны
+                        в едином каталоге.
+                    </span>
+
+                </div>
+
+
+                <div class="about-item">
+
+                    <strong
+                        data-ru="🔗 Официальные ссылки"
+                        data-en="🔗 Official links"
+                    >
+                        🔗 Официальные ссылки
+                    </strong>
+
+                    <span
+                        data-ru="Переход к загрузке выполняется через официальные сайты проектов."
+                        data-en="Downloads are accessed through the projects' official websites."
+                    >
+                        Переход к загрузке выполняется через
+                        официальные сайты проектов.
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         DISTRIBUTIONS
+    ========================== -->
+
+    <section class="section" id="distros">
+
+        <div class="section-title">
+
+            <h2
+                data-ru="Linux-дистрибутивы"
+                data-en="Linux Distributions"
+            >
+                Linux-дистрибутивы
+            </h2>
+
+            <p
+                data-ru="Выбери систему и перейди к официальной загрузке"
+                data-en="Choose a system and go to the official download"
+            >
+                Выбери систему и перейди к официальной загрузке
+            </p>
+
+        </div>
+
+
+        <!-- SEARCH -->
+
+        <div class="search-container">
+
+            <input
+                class="search"
+                id="search"
+                type="text"
+                placeholder="Поиск дистрибутива..."
+                data-placeholder-ru="Поиск дистрибутива..."
+                data-placeholder-en="Search distribution..."
+                oninput="searchDistros()"
+            >
+
+        </div>
+
+
+        <div class="distros" id="distroList">
+
+
+            <!-- UBUNTU -->
+
+            <div class="card distro">
+
+                <div class="icon">🟠</div>
+
+                <h3>Ubuntu</h3>
+
+                <p
+                    data-ru="Популярный и дружелюбный Linux для начинающих, разработчиков и повседневного использования."
+                    data-en="A popular and user-friendly Linux distribution for beginners, developers and everyday use."
+                >
+                    Популярный и дружелюбный Linux для начинающих,
+                    разработчиков и повседневного использования.
+                </p>
+
+                <a
+                    class="download"
+                    href="https://ubuntu.com/download/desktop"
+                    target="_blank"
+                >
+                    <span
+                        data-ru="Скачать →"
+                        data-en="Download →"
+                    >
+                        Скачать →
+                    </span>
+                </a>
+
+            </div>
+
+
+            <!-- FEDORA -->
+
+            <div class="card distro">
+
+                <div class="icon">🔵</div>
+
+                <h3>Fedora</h3>
+
+                <p
+                    data-ru="Современная система с новыми технологиями и отличной платформой для разработки."
+                    data-en="A modern system with new technologies and an excellent development platform."
+                >
+                    Современная система с новыми технологиями
+                    и отличной платформой для разработки.
+                </p>
+
+                <a
+                    class="download"
+                    href="https://fedoraproject.org/workstation/download/"
+                    target="_blank"
+                >
+                    <span
+                        data-ru="Скачать →"
+                        data-en="Download →"
+                    >
+                        Скачать →
+                    </span>
+                </a>
+
+            </div>
+
+
+            <!-- DEBIAN -->
+
+            <div class="card distro">
+
+                <div class="icon">🌀</div>
+
+                <h3>Debian</h3>
+
+                <p
+                    data-ru="Надёжный и стабильный дистрибутив с огромной экосистемой пакетов."
+                    data-en="A reliable and stable distribution with a huge package ecosystem."
+                >
+                    Надёжный и стабильный дистрибутив
+                    с огромной экосистемой пакетов.
+                </p>
+
+                <a
+                    class="download"
+                    href="https://www.debian.org/download"
+                    target="_blank"
+                >
+                    <span
+                        data-ru="Скачать →"
+                        data-en="Download →"
+                    >
+                        Скачать →
+                    </span>
+                </a>
+
+            </div>
+
+
+            <!-- ARCH -->
+
+            <div class="card distro">
+
+                <div class="icon">⚡</div>
+
+                <h3>Arch Linux</h3>
+
+                <p
+                    data-ru="Минималистичный Linux для пользователей, которые хотят полный контроль над системой."
+                    data-en="A minimal Linux distribution for users who want complete control over their system."
+                >
+                    Минималистичный Linux для пользователей,
+                    которые хотят полный контроль над системой.
+                </p>
+
+                <a
+                    class="download"
+                    href="https://archlinux.org/download/"
+                    target="_blank"
+                >
+                    <span
+                        data-ru="Скачать →"
+                        data-en="Download →"
+                    >
+                        Скачать →
+                    </span>
+                </a>
+
+            </div>
+
+
+            <!-- LINUX MINT -->
+
+            <div class="card distro">
+
+                <div class="icon">🌿</div>
+
+                <h3>Linux Mint</h3>
+
+                <p
+                    data-ru="Удобный и комфортный Linux с привычным интерфейсом и несколькими вариантами рабочего стола."
+                    data-en="A comfortable and user-friendly Linux with a familiar interface and several desktop editions."
+                >
+                    Удобный и комфортный Linux с привычным
+                    интерфейсом и несколькими вариантами рабочего стола.
+                </p>
+
+                <a
+                    class="download"
+                    href="https://linuxmint.com/download.php"
+                    target="_blank"
+                >
+                    <span
+                        data-ru="Скачать →"
+                        data-en="Download →"
+                    >
+                        Скачать →
+                    </span>
+                </a>
+
+            </div>
+
+
+            <!-- OPENSUSE -->
+
+            <div class="card distro">
+
+                <div class="icon">🦎</div>
+
+                <h3>openSUSE</h3>
+
+                <p
+                    data-ru="Мощный Linux с удобными инструментами администрирования и разными вариантами выпуска."
+                    data-en="A powerful Linux distribution with excellent administration tools and different release models."
+                >
+                    Мощный Linux с удобными инструментами
+                    администрирования и разными вариантами выпуска.
+                </p>
+
+                <a
+                    class="download"
+                    href="https://get.opensuse.org/"
+                    target="_blank"
+                >
+                    <span
+                        data-ru="Скачать →"
+                        data-en="Download →"
+                    >
+                        Скачать →
+                    </span>
+                </a>
+
+            </div>
+
+
+            <!-- MANJARO -->
+
+            <div class="card distro">
+
+                <div class="icon">🟢</div>
+
+                <h3>Manjaro</h3>
+
+                <p
+                    data-ru="Дружелюбный Arch-based дистрибутив с готовым окружением для повседневной работы."
+                    data-en="A user-friendly Arch-based distribution ready for everyday use."
+                >
+                    Дружелюбный Arch-based дистрибутив
+                    с готовым окружением для повседневной работы.
+                </p>
+
+                <a
+                    class="download"
+                    href="https://manjaro.org/products/download/x86"
+                    target="_blank"
+                >
+                    <span
+                        data-ru="Скачать →"
+                        data-en="Download →"
+                    >
+                        Скачать →
+                    </span>
+                </a>
+
+            </div>
+
+
+            <!-- POP OS -->
+
+            <div class="card distro">
+
+                <div class="icon">🚀</div>
+
+                <h3>Pop!_OS</h3>
+
+                <p
+                    data-ru="Современный дистрибутив для разработчиков, творчества и игр."
+                    data-en="A modern distribution designed for development, creativity and gaming."
+                >
+                    Современный дистрибутив для разработчиков,
+                    творчества и игр.
+                </p>
+
+                <a
+                    class="download"
+                    href="https://pop.system76.com/"
+                    target="_blank"
+                >
+                    <span
+                        data-ru="Скачать →"
+                        data-en="Download →"
+                    >
+                        Скачать →
+                    </span>
+                </a>
+
+            </div>
+
+
+            <!-- KALI -->
+
+            <div class="card distro">
+
+                <div class="icon">🐉</div>
+
+                <h3>Kali Linux</h3>
+
+                <p
+                    data-ru="Дистрибутив для специалистов по безопасности, тестированию и исследованию систем."
+                    data-en="A distribution for security professionals, testing and system research."
+                >
+                    Дистрибутив для специалистов по безопасности,
+                    тестированию и исследованию систем.
+                </p>
+
+                <a
+                    class="download"
+                    href="https://www.kali.org/get-kali/"
+                    target="_blank"
+                >
+                    <span
+                        data-ru="Скачать →"
+                        data-en="Download →"
+                    >
+                        Скачать →
+                    </span>
+                </a>
+
+            </div>
+
+
+            <!-- ZORIN -->
+
+            <div class="card distro">
+
+                <div class="icon">💠</div>
+
+                <h3>Zorin OS</h3>
+
+                <p
+                    data-ru="Красивый и простой Linux, ориентированный на комфортный переход с других ОС."
+                    data-en="A beautiful and easy-to-use Linux designed for a comfortable transition from other operating systems."
+                >
+                    Красивый и простой Linux, ориентированный
+                    на комфортный переход с других ОС.
+                </p>
+
+                <a
+                    class="download"
+                    href="https://zorin.com/os/download/"
+                    target="_blank"
+                >
+                    <span
+                        data-ru="Скачать →"
+                        data-en="Download →"
+                    >
+                        Скачать →
+                    </span>
+                </a>
+
+            </div>
+
+
+            <!-- MX LINUX -->
+
+            <div class="card distro">
+
+                <div class="icon">🔷</div>
+
+                <h3>MX Linux</h3>
+
+                <p
+                    data-ru="Лёгкий и стабильный дистрибутив с упором на производительность и удобство."
+                    data-en="A lightweight and stable distribution focused on performance and usability."
+                >
+                    Лёгкий и стабильный дистрибутив
+                    с упором на производительность и удобство.
+                </p>
+
+                <a
+                    class="download"
+                    href="https://mxlinux.org/download-links/"
+                    target="_blank"
+                >
+                    <span
+                        data-ru="Скачать →"
+                        data-en="Download →"
+                    >
+                        Скачать →
+                    </span>
+                </a>
+
+            </div>
+
+
+            <!-- NIXOS -->
+
+            <div class="card distro">
+
+                <div class="icon">❄️</div>
+
+                <h3>NixOS</h3>
+
+                <p
+                    data-ru="Уникальный Linux с декларативной конфигурацией и функциональным подходом к управлению системой."
+                    data-en="A unique Linux distribution with declarative configuration and a functional approach to system management."
+                >
+                    Уникальный Linux с декларативной конфигурацией
+                    и функциональным подходом к управлению системой.
+                </p>
+
+                <a
+                    class="download"
+                    href="https://nixos.org/download/"
+                    target="_blank"
+                >
+                    <span
+                        data-ru="Скачать →"
+                        data-en="Download →"
+                    >
+                        Скачать →
+                    </span>
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        <div class="footer-logo">
+            Open<span>Linux</span>
+        </div>
+
+        <p
+            data-ru="Оптимизируем путь от поиска до Linux."
+            data-en="Optimizing the path from search to Linux."
+        >
+            Оптимизируем путь от поиска до Linux.
+        </p>
+
+        <a
+            href="https://github.com/Gima1prg"
+            target="_blank"
+        >
+            GitHub — Gima1prg
+        </a>
+
+        <div class="copyright">
+            © 2026 OpenLinux
+        </div>
+
+    </footer>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+        /* =========================
+           STARS
+        ========================== */
+
+        const space =
+            document.getElementById("space");
+
+        for (let i = 0; i < 220; i++) {
+
+            const star =
+                document.createElement("div");
+
+            star.className = "star";
+
+            star.style.left =
+                Math.random() * 100 + "%";
+
+            star.style.top =
+                Math.random() * 100 + "%";
+
+            const size =
+                Math.random() * 2 + 1;
+
+            star.style.width =
+                size + "px";
+
+            star.style.height =
+                size + "px";
+
+            star.style.animationDelay =
+                Math.random() * 5 + "s";
+
+            space.appendChild(star);
+        }
+
+
+        /* =========================
+           LANGUAGE
+        ========================== */
+
+        function setLanguage(language) {
+
+            document.documentElement.lang =
+                language;
+
+            document
+                .querySelectorAll("[data-ru]")
+                .forEach(element => {
+
+                    element.textContent =
+                        element.dataset[language];
+
+                });
+
+
+            document
+                .getElementById("ru")
+                .classList
+                .toggle(
+                    "active",
+                    language === "ru"
+                );
+
+            document
+                .getElementById("en")
+                .classList
+                .toggle(
+                    "active",
+                    language === "en"
+                );
+
+
+            const search =
+                document.getElementById("search");
+
+            search.placeholder =
+                search.dataset[
+                    "placeholder" + language
+                ];
+        }
+
+
+        /* =========================
+           SEARCH
+        ========================== */
+
+        function searchDistros() {
+
+            const query =
+                document
+                    .getElementById("search")
+                    .value
+                    .toLowerCase()
+                    .trim();
+
+
+            document
+                .querySelectorAll(".distro")
+                .forEach(card => {
+
+                    const name =
+                        card
+                            .querySelector("h3")
+                            .textContent
+                            .toLowerCase();
+
+                    if (
+                        name.includes(query)
+                    ) {
+
+                        card.style.display =
+                            "block";
+
+                    } else {
+
+                        card.style.display =
+                            "none";
+
+                    }
+
+                });
+        }
+
+    </script>
+
+</body>
+</html>
